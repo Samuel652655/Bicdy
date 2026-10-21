@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Bicdy</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="stage">
+  <div class="moon"></div>
+  <div class="layer" id="L1"></div>
+  <div class="layer" id="L2"></div>
+  <div class="layer" id="L3"></div>
+</div>
+<canvas id="fg"></canvas>
+
+<button id="prev" class="arrow" aria-label="Ir a la izquierda">‹</button>
+<button id="next" class="arrow" aria-label="Ir a la derecha">›</button>
+<nav id="nav" aria-label="Zonas del mundo"></nav>
+<p id="zone" aria-live="polite"></p>
+<p id="hint">Arrastra o usa las flechas para pasear</p>
+<div id="tools">
+  <button id="home">Inicio</button>
+  <button id="snd" aria-pressed="false">Sonido: apagado</button>
+  <button id="calm" aria-pressed="false">Reducir animaciones</button>
+</div>
+<button id="star" class="secret" aria-label="Una estrella diferente">✦</button>
+<aside id="panel" aria-live="polite"><p id="ptext"></p><button id="pclose" aria-label="Cerrar mensaje">×</button></aside>
+
+<div id="intro">
+  <article class="pass">
+    <header><b>Bicdy Air</b><span>Tarjeta de embarque</span></header>
+    <dl>
+      <div><dt>Pasajera</dt><dd>Bicdy</dd></div>
+      <div><dt>Destino</dt><dd>Un universo de sueños</dd></div>
+    </dl>
+    <p class="quote">Hay regalos que no se compran. Se crean pensando en alguien.</p>
+    <div class="bars" aria-hidden="true"></div>
+  </article>
+  <div class="row noprint">
+    <button class="btn" id="go">Entrar al mundo</button>
+    <button class="btn ghost" id="print">Imprimir o guardar PDF</button>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

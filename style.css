@@ -1,0 +1,105 @@
+:root{--tulip:#ff6fa5;--glow:#ffd98a;--ink:#e9ecff}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:linear-gradient(#070a24,#171046 55%,#2a1745);color:var(--ink);font:17px/1.55 Georgia,"Times New Roman",serif;-webkit-user-select:none;user-select:none}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+#stage{position:fixed;inset:0;overflow:hidden;touch-action:none;cursor:grab}
+.layer{position:absolute;left:0;bottom:0;height:100%;will-change:transform}
+.moon{position:absolute;right:12%;top:9%;width:min(13vh,90px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff8e6,#e8dcc0 60%,#b9a8d8);box-shadow:0 0 40px 10px #c9b8ff55,0 0 120px 40px #8a7fc033;will-change:transform}
+/* capas */
+.hills{position:absolute;left:0;bottom:20%;width:100%;height:32%}
+.lamp{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--glow);box-shadow:0 0 8px 2px #ffd98a99;animation:tw 3s ease-in-out infinite alternate}
+.tree{position:absolute;bottom:19%;background:#0e0a2e;clip-path:polygon(50% 0,62% 28%,56% 28%,72% 55%,60% 55%,80% 85%,54% 85%,54% 100%,46% 100%,46% 85%,20% 85%,40% 55%,28% 55%,44% 28%,38% 28%)}
+.ground{position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(#1c1344,#0a0720)}
+.path{position:absolute;left:0;right:0;bottom:5%;height:5%;border-radius:50%;background:linear-gradient(90deg,transparent,#4a3a8a55 8%,#4a3a8a55 92%,transparent)}
+.obj{position:absolute;transform-origin:50% 100%}
+@keyframes tw{from{opacity:.4}to{opacity:1}}
+/* tulipanes */
+.tulip{height:calc(var(--s)*1vh);aspect-ratio:2/5;animation:sway var(--d) ease-in-out var(--dl) infinite alternate;cursor:pointer}
+.tulip svg{width:100%;height:100%;overflow:visible}
+.tulip .head{transition:filter .5s}
+.tulip:hover .head,.tulip.lit .head{filter:drop-shadow(0 0 9px #ff9ec7) brightness(1.35)}
+@keyframes sway{from{transform:rotate(calc(var(--r)*-1))}to{transform:rotate(var(--r))}}
+/* notas */
+.note{width:32px;height:42px;border:0;padding:0;border-radius:8px 8px 14px 14px;background:linear-gradient(#ffe7a8,#ff9ec0);box-shadow:0 0 24px 4px #ffd98a88;cursor:pointer;animation:bob 4s ease-in-out infinite alternate}
+.note::before{content:"";position:absolute;left:50%;bottom:100%;height:30vh;width:1px;background:#ffffff22}
+@keyframes bob{to{transform:translateY(-10px)}}
+/* mirador */
+.rail{width:320px;height:8vh;border-top:4px solid #5a4a98;background:repeating-linear-gradient(90deg,#5a4a98 0 4px,transparent 4px 42px)}
+.bench{width:110px;height:5vh;border-top:5px solid #3a2a6a;border-bottom:8px solid #3a2a6a;background:repeating-linear-gradient(90deg,transparent 0 6px,#3a2a6a 6px 9px)}
+/* pista */
+.rw{display:flex;gap:26px}
+.rw i{width:6px;height:6px;border-radius:50%;background:#7fd0ff;box-shadow:0 0 8px #7fd0ff;animation:tw 1.6s ease-in-out var(--dl) infinite alternate}
+.pole{width:3px;height:22vh;background:#3a2a6a;position:relative;cursor:pointer}
+.pole::after{content:"";position:absolute;top:0;left:3px;width:70px;height:20px;background:linear-gradient(90deg,#ff7f9f,#ffd0e0);clip-path:polygon(0 0,100% 20%,100% 80%,0 100%);transform-origin:0 0;animation:flag 3s ease-in-out infinite alternate}
+@keyframes flag{from{transform:rotate(-6deg) scaleX(1)}to{transform:rotate(8deg) scaleX(.82)}}
+.beacon{width:5px;height:30vh;background:#3a2a6a;position:relative;cursor:pointer}
+.beacon::before{content:"";position:absolute;top:-6px;left:-5px;width:15px;height:15px;border-radius:50%;background:#ff4060;box-shadow:0 0 18px 4px #ff406088;animation:tw 1.2s ease-in-out infinite alternate}
+.beacon::after{content:"";position:absolute;inset:-20px -20px auto;height:40px}
+/* puerta y gato */
+.doorway{position:relative;width:11vh;height:19vh;min-width:60px;cursor:pointer}
+.frame{position:absolute;inset:0;border-radius:50% 50% 0 0/28% 28% 0 0;background:radial-gradient(circle,#ffd98a,#ff6fa5 70%);border:4px solid #5a4a98;perspective:600px;overflow:visible}
+.panel{position:absolute;inset:0;border-radius:inherit;background:#3a1f58;transform-origin:left center;transition:transform 1.4s cubic-bezier(.6,0,.2,1)}
+.open .panel{transform:rotateY(-100deg)}
+.bt{position:absolute;width:12%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7b8be6,#101a5a);border:2px solid #cfd4ff}
+.panel .bt:nth-child(1){top:30%;left:22%}.panel .bt:nth-child(2){top:30%;right:22%}
+.knob{position:absolute;right:10%;top:62%;width:9%;aspect-ratio:1;border-radius:50%;background:var(--glow)}
+.beam{position:absolute;left:30%;bottom:-6%;width:300%;height:45%;background:linear-gradient(90deg,#ffd98a99,transparent);clip-path:polygon(0 0,100% 40%,100% 100%,0 100%);opacity:0;transition:opacity 1.2s;pointer-events:none}
+.open .beam{opacity:1}
+.wall{width:170px;height:6vh;background:#0a0724;border-top:3px solid #1c1344}
+.cat{width:60px;height:70px;margin-bottom:-2px;cursor:pointer}
+.cat .tail{transform-origin:44px 66px;animation:sway 4s ease-in-out infinite alternate;--r:8deg}
+.cat .eye{animation:blink 6s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.bbtn{width:22px;height:22px;position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7b8be6,#101a5a);border:2px solid #cfd4ff;cursor:pointer}
+.bbtn::before,.bbtn::after{content:"";position:absolute;top:8px;width:2px;height:2px;background:#cfd4ff;border-radius:50%}
+.bbtn::before{left:5px}.bbtn::after{right:5px}
+.bbtn:hover{box-shadow:0 0 14px #7b8be6}
+/* rincón tranquilo */
+.post{width:5px;height:28vh;background:#3a2a6a;position:relative}
+.post::before{content:"";position:absolute;top:-4px;left:-9px;width:22px;height:22px;border-radius:50%;background:var(--glow);box-shadow:0 0 50px 20px #ffd98a55}
+.signboard{background:#2a1a55;border:2px solid #5a4a98;border-radius:6px;padding:.5rem .8rem;width:250px;text-align:center;font-size:.7rem;line-height:1.35;letter-spacing:.05em;color:var(--glow);margin-bottom:-4px}.signboard b{display:block;font-weight:400}
+/* interfaz */
+.arrow{position:fixed;top:50%;z-index:5;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid #8a7fc0;background:#0b0f2a99;color:var(--ink);font-size:1.6rem;line-height:1;cursor:pointer}
+#prev{left:.6rem}#next{right:.6rem}
+#nav{position:fixed;bottom:.9rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:.9rem}
+#nav button{width:12px;height:12px;border-radius:50%;border:1px solid #cfd4ff;background:transparent;padding:0;cursor:pointer}
+#nav button.on{background:var(--glow);border-color:var(--glow)}
+#zone{position:fixed;top:1rem;left:1rem;margin:0;z-index:5;opacity:0;transition:opacity 1s;color:var(--glow)}
+#zone.show{opacity:1}
+#hint{position:fixed;bottom:2.8rem;width:100%;text-align:center;margin:0;z-index:5;font-size:.95rem;opacity:.75;transition:opacity 1.2s;pointer-events:none}
+#hint.off{opacity:0}
+#tools{position:fixed;top:.7rem;right:.7rem;z-index:6;display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end}
+#tools button{font:13px Georgia,serif;background:#0008;color:var(--ink);border:1px solid #8a7fc0;border-radius:8px;padding:.35rem .6rem;cursor:pointer}
+.secret{position:fixed;left:17%;top:13%;z-index:4;background:none;border:0;color:var(--glow);opacity:.3;font-size:.9rem;cursor:pointer;padding:.7rem}
+.secret:hover{opacity:1}
+#panel{position:fixed;left:50%;bottom:4.6rem;transform:translate(-50%,12px);z-index:7;width:min(92vw,520px);padding:1rem 2.4rem 1rem 1.3rem;background:#0b0f2aea;border:1px solid #8a7fc0;border-radius:14px;opacity:0;pointer-events:none;transition:opacity .6s,transform .6s}
+#panel.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#panel p{margin:0}
+#pclose{position:absolute;top:.2rem;right:.5rem;background:none;border:0;color:var(--ink);font-size:1.5rem;cursor:pointer}
+:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+/* bienvenida */
+#intro{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;gap:1.2rem;align-items:center;justify-content:center;padding:1rem;background:#05060fcc;backdrop-filter:blur(6px);transition:opacity 1s}
+#intro.gone{opacity:0;pointer-events:none}
+.row{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+.btn{font:inherit;background:var(--tulip);color:#1a0a24;border:0;border-radius:999px;padding:.7rem 1.4rem;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid #8a7fc0}
+.pass{width:100%;max-width:480px;background:linear-gradient(135deg,#141a4a,#2a1745);border:1px solid #8a7fc0;border-radius:18px;padding:1.3rem 1.5rem;box-shadow:0 0 50px #ff6fa533}
+.pass header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed #8a7fc0;padding-bottom:.6rem}
+.pass header b{font-size:1.4rem;color:var(--tulip)}
+.pass dl{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.9rem 0}
+.pass dt{font-size:.8rem;opacity:.7}.pass dd{margin:0}
+.quote{font-style:italic;color:var(--glow);margin:.3rem 0 .9rem}
+.bars{height:34px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px,var(--ink) 5px 6px,transparent 6px 11px)}
+body.calm *{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){body:not(.full) *{animation:none!important}}
+@media (max-width:600px){.arrow{width:38px;height:38px}#tools button{font-size:12px}}
+@media print{html,body{overflow:visible;background:#fff}#stage,canvas,#nav,#tools,.arrow,#hint,#zone,.secret,#panel,.noprint{display:none!important}#intro{position:static;background:none;backdrop-filter:none}.pass{background:#fff;color:#000;box-shadow:none;border:2px solid #000}.pass header b,.quote{color:#000}.bars{background:repeating-linear-gradient(90deg,#000 0 2px,transparent 2px 5px)}}
+
+/* avionetas con pancarta */
+.bplane{display:flex;align-items:center;pointer-events:none;animation:banner var(--dur) linear var(--dl) infinite;white-space:nowrap}
+.bplane svg{width:54px;flex:none}
+.rope{width:26px;height:1px;background:#e9ecffaa;flex:none}
+.flag{padding:.3rem .9rem;background:#fff4e6;color:#3a1f58;border:2px solid var(--tulip);border-radius:4px;font-size:.92rem;font-style:italic;transform-origin:100% 50%;animation:wave 2.4s ease-in-out infinite alternate;box-shadow:0 0 18px #ff6fa555}
+@keyframes banner{0%{transform:translateX(0);opacity:0}6%{opacity:1}94%{opacity:1}100%{transform:translateX(var(--dist));opacity:0}}
+@keyframes wave{from{transform:skewY(-2deg) scaleX(1)}to{transform:skewY(2deg) scaleX(.96)}}
